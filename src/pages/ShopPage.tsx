@@ -92,8 +92,8 @@ export function ShopPage() {
       </header>
 
       <div data-reveal className="flex flex-col gap-5 border-y border-line py-5 lg:flex-row lg:items-center lg:justify-between">
-        <nav aria-label="Filter by category">
-          <ul className="flex flex-wrap gap-2">
+        <nav aria-label="Filter by category" className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+          <ul className="flex gap-2 sm:flex-wrap">
             {chips.map((c) => {
               const active = (category?.slug ?? '') === c.slug;
               return (
@@ -101,7 +101,7 @@ export function ShopPage() {
                   <Link
                     to={`/shop${c.slug ? `/${c.slug}` : ''}${suffix}`}
                     aria-current={active ? 'page' : undefined}
-                    className={`inline-flex min-h-11 items-center rounded-full border px-5 text-sm transition ${
+                    className={`inline-flex min-h-11 shrink-0 items-center rounded-full border px-5 text-sm whitespace-nowrap transition ${
                       active
                         ? 'border-espresso bg-espresso text-ivory shadow-lift'
                         : 'border-line bg-white text-espresso hover:-translate-y-0.5 hover:border-champagne'

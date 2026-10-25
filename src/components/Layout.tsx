@@ -13,14 +13,16 @@ import { AnnouncementBar, Header } from './Header';
 function ScrollManager() {
   const { pathname, hash } = useLocation();
   useLayoutEffect(() => {
+    // Jump instantly: a smooth scroll (html has scroll-behavior: smooth) would be
+    // cancelled when ScrollTrigger re-measures the new page and restores the old position.
     if (hash) {
       const el = document.getElementById(decodeURIComponent(hash.slice(1)));
       if (el) {
-        el.scrollIntoView();
+        el.scrollIntoView({ behavior: 'instant' });
         return;
       }
     }
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname, hash]);
   return null;
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Accordion } from '../components/Accordion';
 import { Breadcrumbs } from '../components/Breadcrumbs';
@@ -17,11 +17,18 @@ import { NotFoundPage } from './NotFoundPage';
 
 export function ProductPage() {
   const { slug } = useParams();
+  // Keyed by slug so quantity, gallery and "added" state reset when moving between products.
+  return <ProductDetail key={slug} slug={slug} />;
+}
+
+function ProductDetail({ slug }: { slug: string | undefined }) {
   const product = getProduct(slug);
   const { addItem } = useCart();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const addedTimer = useRef<number>();
+  useEffect(() => () => window.clearTimeout(addedTimer.current), []);
 
   usePageMeta({
     title: product?.name ?? 'Product not found',
@@ -39,7 +46,8 @@ export function ProductPage() {
   const addToCart = () => {
     if (addItem(product.slug, quantity)) {
       setAdded(true);
-      window.setTimeout(() => setAdded(false), 2500);
+      window.clearTimeout(addedTimer.current);
+      addedTimer.current = window.setTimeout(() => setAdded(false), 2500);
     }
   };
 

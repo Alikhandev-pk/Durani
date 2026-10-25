@@ -15,10 +15,10 @@ export function ContactPage() {
   return (
     <div className="container-page pt-8 sm:pt-10">
       <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Contact' }]} />
-      <div className="mt-6 grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-20">
         <div>
           <p className="eyebrow mb-3">Get in touch</p>
-          <h1 data-split className="text-5xl tracking-[-0.01em] sm:text-6xl">Contact Durani Cosmetics</h1>
+          <h1 data-split className="text-[2.6rem] tracking-[-0.01em] sm:text-6xl">Contact Durani Cosmetics</h1>
           <p className="mt-5 max-w-md text-lg text-cocoa">
             For questions about our products or ordering, send us a message — we'd love to hear from you.
           </p>

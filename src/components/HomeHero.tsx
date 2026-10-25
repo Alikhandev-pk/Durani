@@ -17,6 +17,9 @@ const stage = [
   { slug: 'durani-beauty-cream', pos: 'left-1/2 bottom-[9%] h-[27%] -translate-x-[18%] z-30', depth: 1.4 },
 ];
 
+const chip =
+  'glass inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.6rem] font-medium tracking-[0.12em] whitespace-nowrap uppercase sm:gap-2 sm:px-4 sm:py-2 sm:text-xs sm:tracking-[0.14em]';
+
 /** Positions for the twinkling sparkles around the stage. */
 const sparkles = [
   'left-[8%] top-[14%] w-5',
@@ -37,7 +40,7 @@ function Sparkle({ className }: { className: string }) {
 /** Rotating circular label taken from the pack line "Unlock Your Natural Beauty". */
 function Badge() {
   return (
-    <div data-badge className="absolute top-[2%] right-[1%] z-40 h-24 w-24 sm:h-28 sm:w-28" aria-hidden="true">
+    <div data-badge className="absolute top-[2%] right-0 z-40 h-20 w-20 sm:right-[1%] sm:h-28 sm:w-28" aria-hidden="true">
       <svg data-badge-ring viewBox="0 0 100 100" className="h-full w-full">
         <defs>
           <path id="hero-badge-circle" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0" />
@@ -151,16 +154,16 @@ export function HomeHero() {
 
       <div className="container-page grid items-center gap-8 pt-10 pb-16 sm:pt-14 lg:min-h-[calc(100svh-7.5rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-6 lg:py-14">
         <div data-hero-copy className="relative z-10 max-w-xl">
-          <p className="flex items-center gap-4">
-            <span data-eyebrow-line aria-hidden="true" className="h-px w-12 bg-gold" />
-            <span data-eyebrow className="eyebrow">
+          <p className="flex items-center gap-3 sm:gap-4">
+            <span data-eyebrow-line aria-hidden="true" className="h-px w-8 shrink-0 bg-gold sm:w-12" />
+            <span data-eyebrow className="eyebrow text-[0.66rem] tracking-[0.22em] whitespace-nowrap sm:text-xs sm:tracking-[0.28em]">
               Durani Cosmetics · Pakistan
             </span>
           </p>
 
           <h1
             id="hero-heading"
-            className="mt-6 text-[3.25rem] leading-[0.98] font-medium tracking-[-0.02em] sm:text-7xl xl:text-[5.75rem]"
+            className="mt-5 text-[2.9rem] leading-[0.98] min-[380px]:text-[3.25rem] sm:mt-6 font-medium tracking-[-0.02em] sm:text-7xl xl:text-[5.75rem]"
           >
             <span className="sr-only">Durani Cosmetics — </span>
             <span className="block overflow-hidden pb-[0.08em]">
@@ -256,14 +259,14 @@ export function HomeHero() {
             ))}
 
             {/* Pack callouts */}
-            <div data-depth="1.6" className="absolute top-[30%] -left-[2%] z-40 sm:-left-[6%]">
-              <span data-chip className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium tracking-[0.14em] uppercase">
+            <div data-depth="1.6" className="absolute top-[24%] left-0 z-40 sm:top-[30%] sm:-left-[6%]">
+              <span data-chip className={chip}>
                 <span className="h-1.5 w-1.5 rounded-full bg-gold" />
                 100% Natural
               </span>
             </div>
-            <div data-depth="1.8" className="absolute -right-[1%] bottom-[33%] z-40 sm:-right-[4%]">
-              <span data-chip className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium tracking-[0.14em] uppercase">
+            <div data-depth="1.8" className="absolute right-0 bottom-[6%] z-40 sm:-right-[4%] sm:bottom-[33%]">
+              <span data-chip className={chip}>
                 <span className="h-1.5 w-1.5 rounded-full bg-[#7a9a4a]" />
                 Avocado &amp; Aloe Vera
               </span>

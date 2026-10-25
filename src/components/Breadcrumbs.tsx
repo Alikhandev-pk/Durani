@@ -17,7 +17,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
               </span>
             )}
             {item.to ? (
-              <Link to={item.to} className="hover:text-gold-deep">
+              <Link to={item.to} className="inline-flex min-h-8 items-center hover:text-gold-deep">
                 {item.label}
               </Link>
             ) : (

@@ -79,8 +79,9 @@ export function HeroSlider() {
         )
         .fromTo(incoming.querySelector('img'), { scale: 1.18, xPercent: dir * 8 }, { scale: 1, xPercent: 0, duration: 1.6, ease: 'expo.out' }, 0)
         .to(outgoing.querySelector('img'), { xPercent: dir * -10, scale: 1.04 }, 0)
-        .set(outgoing, { autoAlpha: 0 })
-        .set(outgoing.querySelector('img'), { clearProps: 'transform' });
+        // Hide the old slide as soon as the wipe has covered it.
+        .set(outgoing, { autoAlpha: 0 }, 1.15)
+        .set(outgoing.querySelector('img'), { clearProps: 'transform' }, 1.15);
 
       if (captionRef.current) {
         gsap.fromTo(
@@ -178,7 +179,7 @@ export function HeroSlider() {
       {/* Slides: stacked, each at the banner's own aspect ratio. */}
       <div
         data-reveal
-        className="relative w-full touch-pan-y overflow-hidden rounded-[1.75rem] bg-cream shadow-lift select-none sm:rounded-[2.5rem]"
+        className="relative -mx-4 touch-pan-y overflow-hidden bg-cream shadow-lift select-none sm:mx-0 sm:rounded-[2.5rem]"
         style={{ aspectRatio: `${active.width} / ${active.height}` }}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
@@ -247,7 +248,7 @@ export function HeroSlider() {
                 onClick={() => goTo(i)}
                 aria-label={`Slide ${i + 1}: ${banner.title}`}
                 aria-current={i === index ? 'true' : undefined}
-                className="group grid h-11 place-items-center px-1.5"
+                className="group grid h-11 min-w-8 place-items-center px-1"
               >
                 <span
                   className={`relative block h-1.5 overflow-hidden rounded-full transition-all duration-500 ${

@@ -66,7 +66,7 @@ export function Footer() {
             { label: 'FAQ', to: '/#faq' },
           ]}
         />
-        <FooterColumn title="Policies" links={policyNav} note="Drafts — pending confirmation" />
+        <FooterColumn title="Policies" links={policyNav} note="Drafts — pending confirmation" className="col-span-2 sm:col-span-1" />
       </div>
       <div aria-hidden="true" className="container-page overflow-hidden">
         <p
@@ -87,9 +87,19 @@ export function Footer() {
   );
 }
 
-function FooterColumn({ title, links, note }: { title: string; links: { label: string; to: string }[]; note?: string }) {
+function FooterColumn({
+  title,
+  links,
+  note,
+  className = '',
+}: {
+  title: string;
+  links: { label: string; to: string }[];
+  note?: string;
+  className?: string;
+}) {
   return (
-    <div>
+    <div className={className}>
       <h2 className="eyebrow">{title}</h2>
       {note && <p className="mt-1 text-xs text-cocoa/80">{note}</p>}
       <ul className="mt-4 space-y-1">
