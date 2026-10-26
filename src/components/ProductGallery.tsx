@@ -1,5 +1,7 @@
 import { useId, useRef, useState, type PointerEvent } from 'react';
 import type { ProductImage as ProductImageData } from '../data/products';
+import { gsap, MOTION_OK, useGSAP } from '../lib/gsap';
+import { imageDimensions } from '../lib/images';
 import { CloseIcon, MinusIcon, PlusIcon, ZoomIcon } from './Icons';
 import { Modal } from './Modal';
 import { ProductImage } from './ProductImage';
@@ -14,6 +16,34 @@ export function ProductGallery({ images, productName }: Props) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [hoverZoom, setHoverZoom] = useState<{ x: number; y: number } | null>(null);
   const image = images[active];
+  const stageRef = useRef<HTMLDivElement>(null);
+  // Portrait artwork (supplied posters) gets a taller frame so its label text
+  // stays readable, and the zoom button moves below it so it covers nothing.
+  const portrait = images.some((img) => {
+    const { width, height } = imageDimensions(img);
+    return height > width;
+  });
+  const frame = portrait ? 'aspect-[4/5]' : 'aspect-square';
+
+  // Ease the image in on load and when another thumbnail is chosen. Scale stays
+  // at or below 1 so the artwork is never cropped mid-animation.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.from('[data-gallery-image]', {
+          autoAlpha: 0,
+          scale: 0.96,
+          y: 12,
+          filter: 'blur(6px)',
+          duration: 0.9,
+          ease: 'expo.out',
+          clearProps: 'filter',
+        });
+      });
+    },
+    { dependencies: [active], scope: stageRef, revertOnUpdate: true },
+  );
 
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== 'mouse') return;
@@ -24,11 +54,23 @@ export function ProductGallery({ images, productName }: Props) {
     });
   };
 
+  const zoomButton = (
+    <button
+      type="button"
+      onClick={() => setLightboxOpen(true)}
+      className={`${portrait ? 'self-end' : 'absolute right-3 bottom-3'} inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white/95 px-4 text-xs font-medium tracking-[0.1em] text-espresso uppercase shadow-soft transition hover:border-espresso`}
+    >
+      <ZoomIcon width={18} height={18} />
+      Zoom<span className="sr-only"> image of {productName}</span>
+    </button>
+  );
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative overflow-hidden rounded-3xl border border-line/70 bg-white">
+      <div ref={stageRef} className="relative overflow-hidden rounded-3xl border border-line/70 bg-white">
         {/* Hover magnifier (mouse only); click or the zoom button opens the full view. */}
         <div
+          data-gallery-image
           className="cursor-zoom-in"
           onPointerMove={onPointerMove}
           onPointerLeave={() => setHoverZoom(null)}
@@ -42,18 +84,12 @@ export function ProductGallery({ images, productName }: Props) {
                 : undefined
             }
           >
-            <ProductImage image={image} eager sizes="(min-width: 1024px) 560px, 92vw" />
+            <ProductImage image={image} eager frame={frame} sizes="(min-width: 1024px) 560px, 92vw" />
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => setLightboxOpen(true)}
-          className="absolute right-3 bottom-3 inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white/95 px-4 text-xs font-medium tracking-[0.1em] text-espresso uppercase shadow-soft transition hover:border-espresso"
-        >
-          <ZoomIcon width={18} height={18} />
-          Zoom<span className="sr-only"> image of {productName}</span>
-        </button>
+        {!portrait && zoomButton}
       </div>
+      {portrait && zoomButton}
 
       {images.length > 1 && (
         <ul className="grid grid-cols-4 gap-3 sm:grid-cols-5" aria-label="Product images">
@@ -68,7 +104,7 @@ export function ProductGallery({ images, productName }: Props) {
                   i === active ? 'border-espresso ring-1 ring-espresso' : 'border-line hover:border-champagne'
                 }`}
               >
-                <ProductImage image={{ ...img, alt: '' }} sizes="96px" />
+                <ProductImage image={{ ...img, alt: '' }} sizes="96px" frame={frame} />
               </button>
             </li>
           ))}
@@ -100,6 +136,7 @@ function Lightbox({
   const [scale, setScale] = useState(1);
   const [origin, setOrigin] = useState({ x: 50, y: 50 });
   const frameRef = useRef<HTMLDivElement>(null);
+  const { width, height } = imageDimensions(image);
 
   const close = () => {
     setScale(1);
@@ -189,10 +226,15 @@ function Lightbox({
           }}
         >
           <div
-            className="aspect-square h-full max-h-full w-auto max-w-full transition-transform duration-200 ease-out"
-            style={{ transform: `scale(${scale})`, transformOrigin: `${origin.x}% ${origin.y}%` }}
+            className="h-full max-h-full w-auto max-w-full transition-transform duration-200 ease-out"
+            style={{
+              aspectRatio: `${width} / ${height}`,
+              transform: `scale(${scale})`,
+              transformOrigin: `${origin.x}% ${origin.y}%`,
+            }}
           >
-            <ProductImage image={image} sizes="100vw" eager />
+            {/* The wrapper already has the image's aspect ratio, so no frame is needed. */}
+            <ProductImage image={image} sizes="100vw" eager frame="" />
           </div>
         </div>
         <p className="shrink-0 pb-4 text-center text-xs text-cocoa">

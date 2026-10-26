@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { categories, products } from '../data/products';
 import { useMagnetic } from '../hooks/useMagnetic';
-import { cutout } from '../lib/images';
+import { cutout, productThumb } from '../lib/images';
 import { FINE_POINTER, gsap, MOTION_OK, useGSAP } from '../lib/gsap';
 import { ArrowRightIcon } from './Icons';
 
@@ -179,8 +179,8 @@ export function HomeHero() {
           </h1>
 
           <p data-intro className="mt-5 max-w-md text-base text-cocoa sm:mt-6 sm:text-xl">
-            Serum, face washes and beauty cream from Durani — four everyday essentials, shown just as they come in the
-            pack.
+            Serums, face washes, beauty cream and skin polish from Durani — everyday essentials, shown just as they
+            come in the pack.
           </p>
 
           <div data-intro className="mt-8 flex flex-wrap items-center gap-3 sm:mt-9">
@@ -200,7 +200,7 @@ export function HomeHero() {
                   key={p.slug}
                   className="grid h-12 w-12 place-items-center overflow-hidden rounded-full border-2 border-ivory bg-white shadow-soft"
                 >
-                  <img {...cutout(p.slug)} alt="" className="h-9 w-auto object-contain" />
+                  <img {...productThumb(p, '48px')} alt="" className="h-9 w-auto max-w-9 object-contain" />
                 </li>
               ))}
             </ul>

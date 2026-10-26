@@ -6,6 +6,8 @@
  * Banners  -> public/images/banners/<name>-{768,1280,1983}.webp + <name>.png (original, fallback)
  * Products -> public/images/products/<slug>-{400,800,1200}.webp + <slug>-800.jpg (fallback)
  * Cutouts  -> public/images/cutouts/<slug>-{480,960}.webp (transparent, for the home hero)
+ * Posters  -> public/images/products/<slug>-poster-{400,800,<source width>}.webp + <slug>-poster-800.jpg
+ *             (supplied product artwork, resized only: never cropped, padded or retouched)
  * Logo     -> public/images/logo/durani-logo-{160,320}.{webp,png} (round badge, transparent corners)
  *             + public/favicon-32.png and public/apple-touch-icon.png
  *
@@ -66,6 +68,17 @@ export const productSources = [
   },
 ];
 const productWidths = [400, 800, 1200];
+
+/**
+ * Supplied product posters (full artwork with packaging and label text).
+ * Keep `widths`, `width` and `height` in src/data/products.ts in sync with the output.
+ */
+export const productPosters = [
+  { slug: 'durani-vitamin-c-serum', original: 'durani-vitamin-c-serum-poster.jpg' },
+  { slug: 'durani-gluta-white-serum', original: 'durani-gluta-white-serum-poster.jpg' },
+  { slug: 'durani-zafrani-skin-polish', original: 'durani-zafrani-skin-polish-poster.jpg' },
+];
+const posterWidths = [400, 800];
 /** Heights of the transparent hero cutouts. */
 const cutoutHeights = [480, 960];
 const CANVAS = 1200;
@@ -253,6 +266,26 @@ async function processProduct({ slug, original, crop, polygon }) {
   return hasCutout;
 }
 
+/** Resizes a poster to each width below its own, plus its own width, keeping the aspect ratio. */
+async function processPoster({ slug, original }) {
+  const src = path.join(originals, 'product-posters', original);
+  const { width } = await sharp(src).metadata();
+  const base = path.join(outProducts, `${slug}-poster`);
+  await mkdir(outProducts, { recursive: true });
+  for (const w of [...posterWidths.filter((pw) => pw < width), width]) {
+    // Higher quality than the product canvases so small label text stays legible.
+    await sharp(src)
+      .resize({ width: w, kernel: 'lanczos3' })
+      .webp({ quality: 88, effort: 6 })
+      .toFile(`${base}-${w}.webp`);
+  }
+  await sharp(src)
+    .resize({ width: 800, withoutEnlargement: true, kernel: 'lanczos3' })
+    .jpeg({ quality: 86, mozjpeg: true })
+    .toFile(`${base}-800.jpg`);
+  console.log(`poster  ${slug} (${width}px source)`);
+}
+
 /**
  * The official logo is a round badge on a white square. Mask it to a circle so
  * it sits cleanly on any background. Replace assets/originals/logo/durani-logo.jpg
@@ -287,6 +320,7 @@ const missing = [];
 for (const p of productSources) {
   if (!(await processProduct(p))) missing.push(p.slug);
 }
+for (const p of productPosters) await processPoster(p);
 if (missing.length) {
   console.warn(`\nThese product images use the original background and need editing:\n  ${missing.join('\n  ')}`);
 }

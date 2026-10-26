@@ -1,3 +1,5 @@
+import type { Product, ProductImage } from '../data/products';
+
 /** Widths generated for product images by scripts/process-images.mjs. */
 export const productImageWidths = [400, 800, 1200] as const;
 
@@ -9,4 +11,24 @@ export function cutout(slug: string): { src: string; srcSet: string } {
 
 export function srcSet(base: string, widths: readonly number[], ext = 'webp'): string {
   return widths.map((w) => `${base}-${w}.${ext} ${w}w`).join(', ');
+}
+
+/** Widths and intrinsic size of a product image (square canvas unless the data says otherwise). */
+export function imageDimensions(image: ProductImage): { widths: readonly number[]; width: number; height: number } {
+  return {
+    widths: image.widths ?? productImageWidths,
+    width: image.width ?? 1200,
+    height: image.height ?? 1200,
+  };
+}
+
+/**
+ * Small product visual: the transparent cutout when there is one, otherwise
+ * the first product image (shown whole with object-contain by the caller).
+ */
+export function productThumb(product: Product, sizes: string): { src: string; srcSet: string; sizes?: string } {
+  if (product.cutout) return cutout(product.slug);
+  const image = product.images[0];
+  const { widths } = imageDimensions(image);
+  return { src: `${image.base}-${widths[0]}.webp`, srcSet: srcSet(image.base, widths), sizes };
 }

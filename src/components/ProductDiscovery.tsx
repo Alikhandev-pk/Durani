@@ -103,7 +103,7 @@ export function ProductDiscovery() {
       >
         <div className="group overflow-hidden rounded-[1.5rem]">
           <div data-disc-product>
-            <ProductStage slug={product.slug} size="h-[72%]" className="aspect-square" />
+            <ProductStage product={product} size="h-[72%]" sizes="(min-width: 640px) 40vw, 92vw" className="aspect-square" />
           </div>
         </div>
         <div data-disc-text className="sm:pr-4">

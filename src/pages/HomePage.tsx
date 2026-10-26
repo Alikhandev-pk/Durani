@@ -10,9 +10,9 @@ import { ProductStage } from '../components/ProductStage';
 import { ScrubText } from '../components/ScrubText';
 import { SectionHeading } from '../components/SectionHeading';
 import { isCheckoutLive, site, whatsappLink } from '../config/site';
-import { categories, products } from '../data/products';
+import { categories, getProduct, products, type CategorySlug } from '../data/products';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { cutout } from '../lib/images';
+import { productThumb } from '../lib/images';
 
 /** Phrases printed on the Durani packs, for the ribbon under the hero. */
 const packPhrases = [
@@ -22,13 +22,16 @@ const packPhrases = [
   'Avocado & Aloe Vera',
   'Skin Brightening',
   'Skin Whitening + Glowing',
+  'Keep Glowing Forever',
+  'Advanced Skin Solution',
 ];
 
 /** Product photo used to represent each category. */
-const categoryCover: Record<string, string> = {
+const categoryCover: Record<CategorySlug, string> = {
   'face-wash': 'durani-skin-brightening-face-wash',
   serums: 'durani-skin-whitening-serum',
   'beauty-cream': 'durani-beauty-cream',
+  'skin-polish': 'durani-zafrani-skin-polish',
 };
 
 const facebookLink = (
@@ -114,16 +117,24 @@ export function HomePage() {
       {/* Shop by category */}
       <section aria-labelledby="categories-heading" className="container-page pt-24 sm:pt-32">
         <SectionHeading eyebrow="Explore" title="Shop by Category" id="categories-heading" align="center" />
-        <ul className="grid gap-4 sm:grid-cols-3 sm:gap-5 lg:gap-8">
+        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
           {categories.map((c, i) => {
             const count = products.filter((p) => p.category === c.slug).length;
+            const cover = getProduct(categoryCover[c.slug]);
             return (
               <li key={c.slug} data-reveal>
                 <Link
                   to={`/shop/${c.slug}`}
                   className="group relative flex items-center overflow-hidden rounded-[2rem] border border-line/70 bg-white transition duration-500 ease-[cubic-bezier(.2,.7,.2,1)] hover:-translate-y-1.5 hover:shadow-lift sm:block"
                 >
-                  <ProductStage slug={categoryCover[c.slug]} className="aspect-square w-32 shrink-0 sm:aspect-[5/4] sm:w-auto" />
+                  {cover && (
+                    <ProductStage
+                      product={cover}
+                      sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 128px"
+                      posterPadding="p-[6%] sm:px-[20%]"
+                      className="aspect-square w-32 shrink-0 sm:aspect-[5/4] sm:w-auto"
+                    />
+                  )}
                   <span
                     aria-hidden="true"
                     className="absolute top-4 right-5 hidden font-serif text-5xl text-champagne/60 italic transition-colors duration-500 group-hover:text-gold sm:block"
@@ -216,7 +227,7 @@ export function HomePage() {
                 >
                   <div className="relative aspect-square">
                     <img
-                      {...cutout(p.slug)}
+                      {...productThumb(p, '(min-width: 1024px) 180px, 40vw')}
                       alt=""
                       loading="lazy"
                       className="absolute inset-0 m-auto h-[82%] w-auto max-w-full object-contain drop-shadow-[0_18px_24px_rgb(0_0_0/0.35)] transition duration-700 group-hover:-translate-y-1 group-hover:scale-105"

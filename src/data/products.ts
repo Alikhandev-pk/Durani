@@ -3,12 +3,12 @@
  *
  * Every field here is taken from the supplied photos/packaging. Fields that
  * were not supplied are `null` and the UI shows a "to be confirmed" state:
- * - `price: null`  -> purchasing disabled, "Price to be confirmed"
+ * - `price: null`  -> purchasing disabled, "Contact for price". Never use 0 as a placeholder.
  * - `size: null`   -> "Size to be confirmed"
  * - `usage` / `ingredients: null` -> section explains details are not yet supplied
  */
 
-export type CategorySlug = 'face-wash' | 'serums' | 'beauty-cream';
+export type CategorySlug = 'face-wash' | 'serums' | 'beauty-cream' | 'skin-polish';
 
 export interface Category {
   slug: CategorySlug;
@@ -21,6 +21,11 @@ export interface ProductImage {
   /** Base path without size suffix or extension, e.g. /images/products/durani-serum */
   base: string;
   alt: string;
+  /** Generated widths. Defaults to the square product canvas (400, 800, 1200). */
+  widths?: readonly number[];
+  /** Intrinsic size of the largest file. Defaults to 1200×1200. */
+  width?: number;
+  height?: number;
 }
 
 export interface Product {
@@ -34,6 +39,11 @@ export interface Product {
   /** In PKR. */
   price: number | null;
   images: ProductImage[];
+  /**
+   * Whether a transparent cutout exists in /images/cutouts. Without one, cards
+   * show the first image whole (supplied posters are never cropped).
+   */
+  cutout: boolean;
   description: string;
   /** Text clearly legible on the packaging, reproduced verbatim. */
   packagingText: string[];
@@ -45,6 +55,7 @@ export const categories: Category[] = [
   { slug: 'face-wash', name: 'Face Wash', navLabel: 'Face Wash' },
   { slug: 'serums', name: 'Serums', navLabel: 'Serums' },
   { slug: 'beauty-cream', name: 'Beauty Cream', navLabel: 'Beauty Cream' },
+  { slug: 'skin-polish', name: 'Skin Polish', navLabel: 'Skin Polish' },
 ];
 
 export const products: Product[] = [
@@ -61,6 +72,7 @@ export const products: Product[] = [
         alt: 'Durani Skin Whitening Serum, 30 ml, in its white and yellow retail box',
       },
     ],
+    cutout: true,
     description:
       'Durani Skin Whitening Serum comes in a 30 ml dropper bottle, packed in a white and yellow Durani retail box.',
     packagingText: [
@@ -85,6 +97,7 @@ export const products: Product[] = [
         alt: 'Durani Skin Brightening Face Wash, 120 ml white tube with yellow bands and a flip cap',
       },
     ],
+    cutout: true,
     description: 'Durani Skin Brightening Face Wash comes in a 120 ml tube with a flip cap.',
     packagingText: [
       '100% Natural',
@@ -115,6 +128,7 @@ export const products: Product[] = [
         alt: 'Durani Rice Skin Whitening + Glowing Face Wash in a white and cream tube with gold accents',
       },
     ],
+    cutout: true,
     description: 'Durani Rice Face Wash comes in a white and cream tube with gold detailing and a flip cap.',
     packagingText: ['Rice', 'Skin Whitening + Glowing', 'Face Wash', 'Skin Rejuvenation'],
     usage: null,
@@ -133,6 +147,7 @@ export const products: Product[] = [
         alt: 'Durani Beauty Cream with Avocado & Aloe Vera in its yellow and white box',
       },
     ],
+    cutout: true,
     description: 'Durani Beauty Cream with Avocado & Aloe Vera comes in a yellow and white Durani box.',
     packagingText: [
       '30 SPF',
@@ -141,6 +156,88 @@ export const products: Product[] = [
       '7 Days Recovery',
       'anti wrinkle, anti ageing',
       'black spots, freckles & for fairer skin',
+    ],
+    usage: null,
+    ingredients: null,
+  },
+  {
+    slug: 'durani-vitamin-c-serum',
+    name: 'Durani Vitamin C Serum',
+    shortName: 'Durani Vitamin C Serum',
+    category: 'serums',
+    size: null,
+    price: null,
+    images: [
+      {
+        base: '/images/products/durani-vitamin-c-serum-poster',
+        alt: 'Durani Vitamin C Serum box, white with an orange slice and orange wave, labelled 10%+ Vitamin C Serum, shown with fresh oranges',
+        widths: [400, 800, 1024],
+        width: 1024,
+        height: 1280,
+      },
+    ],
+    cutout: false,
+    description: 'Durani Vitamin C Serum comes in a white and orange Durani retail box.',
+    packagingText: [
+      '10%+',
+      'Vitamin C Serum',
+      'Visibly brightens the skin & reduce appearance of sign of aging.',
+    ],
+    usage: null,
+    ingredients: null,
+  },
+  {
+    slug: 'durani-gluta-white-serum',
+    name: 'Durani Gluta White Serum',
+    shortName: 'Durani Gluta White Serum',
+    category: 'serums',
+    size: null,
+    price: null,
+    images: [
+      {
+        base: '/images/products/durani-gluta-white-serum-poster',
+        alt: 'Durani Gluta White Skin Whitening Serum box in orange, white and bronze, with a dropper bottle pictured on the front',
+        widths: [400, 800, 853],
+        width: 853,
+        height: 1280,
+      },
+    ],
+    cutout: false,
+    description: 'Durani Gluta White Serum comes in an orange, white and bronze Durani retail box.',
+    packagingText: [
+      '100% Natural',
+      'Gluta White',
+      'Skin Whitening Serum',
+      'Keep Glowing Forever',
+      'Skin Whitening & Anti-aging',
+    ],
+    usage: null,
+    ingredients: null,
+  },
+  {
+    slug: 'durani-zafrani-skin-polish',
+    name: 'Durani Zafrani Skin Polish',
+    shortName: 'Durani Zafrani Skin Polish',
+    category: 'skin-polish',
+    size: null,
+    price: null,
+    images: [
+      {
+        base: '/images/products/durani-zafrani-skin-polish-poster',
+        alt: 'Durani Zafrani Skin Polish box in white, gold and purple with a saffron flower and a bowl of saffron threads',
+        widths: [400, 800, 853],
+        width: 853,
+        height: 1280,
+      },
+    ],
+    cutout: false,
+    description: 'Durani Zafrani Skin Polish comes in a white, gold and purple Durani retail box.',
+    packagingText: [
+      'Zafrani Skin Polish',
+      'Advanced Skin Solution',
+      'Brightening Organic Skincare',
+      'Multipurpose Facial',
+      'For All Skin Types',
     ],
     usage: null,
     ingredients: null,

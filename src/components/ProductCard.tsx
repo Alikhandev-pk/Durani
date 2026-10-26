@@ -14,7 +14,8 @@ export function ProductCard({ product, headingLevel = 3 }: { product: Product; h
   return (
     <article className="group relative flex h-full flex-col">
       <div className="relative overflow-hidden rounded-[1.75rem] ring-1 ring-line/60 transition duration-500 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:-translate-y-1.5 group-hover:shadow-lift">
-        <ProductStage slug={product.slug} className="aspect-[4/5]" />
+        {/* Posters sit below the category label so no artwork is covered. */}
+        <ProductStage product={product} className="aspect-[4/5]" posterPadding="px-[5%] pt-[13%] pb-[4%]" />
         {/* Light sweep on hover */}
         <span
           aria-hidden="true"
@@ -25,12 +26,15 @@ export function ProductCard({ product, headingLevel = 3 }: { product: Product; h
             {category.name}
           </span>
         )}
-        <span
-          aria-hidden="true"
-          className="absolute inset-x-3 bottom-3 hidden translate-y-[140%] items-center justify-center gap-2 rounded-full bg-espresso/90 py-3 text-[0.7rem] font-medium tracking-[0.16em] text-ivory uppercase backdrop-blur transition duration-500 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:translate-y-0 sm:flex"
-        >
-          View product <ArrowRightIcon width={14} height={14} />
-        </span>
+        {/* Hover bar; left out over posters, where it would cover label text. */}
+        {product.cutout && (
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-3 bottom-3 hidden translate-y-[140%] items-center justify-center gap-2 rounded-full bg-espresso/90 py-3 text-[0.7rem] font-medium tracking-[0.16em] text-ivory uppercase backdrop-blur transition duration-500 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:translate-y-0 sm:flex"
+          >
+            View product <ArrowRightIcon width={14} height={14} />
+          </span>
+        )}
       </div>
       <div className="flex flex-1 flex-col pt-4">
         <Heading className="font-serif text-base leading-snug sm:text-lg">

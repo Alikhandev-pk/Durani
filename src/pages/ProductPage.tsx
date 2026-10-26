@@ -158,7 +158,7 @@ function ProductDetail({ slug }: { slug: string | undefined }) {
 
               {!purchasable && (
                 <div className="rounded-2xl bg-cream px-5 py-4 text-sm text-cocoa">
-                  <p className="font-medium text-espresso">Price to be confirmed</p>
+                  <p className="font-medium text-espresso">Contact for price</p>
                   <p className="mt-1">
                     Online ordering for this product will open once its price is confirmed.
                     {whatsapp ? ' You can message us on WhatsApp to ask about it.' : ' You can ask about it on Facebook.'}

@@ -11,6 +11,7 @@ export const mainNav: NavItem[] = [
   { label: 'Face Wash', to: '/shop/face-wash' },
   { label: 'Serums', to: '/shop/serums' },
   { label: 'Beauty Cream', to: '/shop/beauty-cream' },
+  { label: 'Skin Polish', to: '/shop/skin-polish' },
   { label: 'Contact', to: '/contact' },
 ];
 

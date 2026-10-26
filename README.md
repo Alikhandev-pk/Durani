@@ -32,8 +32,8 @@ npm run images     # regenerate web images from assets/originals
 
 Fill these in. The site already handles each one: when a value is `null`, the related feature is hidden or labelled "to be confirmed".
 
-- **Prices** for all four products (`price` in `products.ts`). Purchasing turns on per product once a price is set, and price sorting appears.
-- **Sizes**: Durani Rice Face Wash and Durani Beauty Cream.
+- **Prices** for all seven products (`price` in `products.ts`); until then each shows "Contact for price". Purchasing turns on per product once a price is set, and price sorting appears.
+- **Sizes**: Durani Rice Face Wash, Durani Beauty Cream, Durani Vitamin C Serum, Durani Gluta White Serum and Durani Zafrani Skin Polish.
 - **Usage directions and ingredient lists** for each product.
 - **Order handling**: set `site.orders.endpoint` (receives a JSON POST) to switch off demo checkout. Until then, no order is sent and no success message is shown.
 - **WhatsApp number** (`site.contact.whatsapp`) turns on "Order on WhatsApp" buttons.

@@ -138,14 +138,14 @@ export function Header() {
         </div>
 
         <nav aria-label="Main" className="hidden justify-center lg:flex">
-          <ul className="flex items-center gap-1 xl:gap-3">
+          <ul className="flex items-center gap-0.5 xl:gap-3">
             {mainNav.map((item) => (
               <li key={item.to} data-header-item>
                 <NavLink
                   to={item.to}
                   end={item.end}
                   className={({ isActive }) =>
-                    `relative inline-flex min-h-11 items-center px-3 text-[0.8rem] font-medium tracking-[0.14em] uppercase transition-colors after:absolute after:inset-x-3 after:bottom-2 after:h-px after:origin-left after:bg-gold-deep after:transition-transform after:duration-300 hover:text-gold-deep ${
+                    `relative inline-flex min-h-11 items-center px-2 text-[0.72rem] font-medium tracking-[0.1em] whitespace-nowrap uppercase transition-colors after:absolute after:inset-x-2 xl:px-3 xl:text-[0.8rem] xl:tracking-[0.14em] xl:after:inset-x-3 after:bottom-2 after:h-px after:origin-left after:bg-gold-deep after:transition-transform after:duration-300 hover:text-gold-deep ${
                       isActive ? 'text-gold-deep after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'
                     }`
                   }
