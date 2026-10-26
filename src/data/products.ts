@@ -65,7 +65,7 @@ export const products: Product[] = [
     shortName: 'Durani Serum',
     category: 'serums',
     size: '30 ml / 1.1 fl oz',
-    price: null,
+    price: 800,
     images: [
       {
         base: '/images/products/durani-skin-whitening-serum',
@@ -90,7 +90,7 @@ export const products: Product[] = [
     shortName: 'Durani Face Wash',
     category: 'face-wash',
     size: '120 ml / 4 fl oz',
-    price: null,
+    price: 500,
     images: [
       {
         base: '/images/products/durani-skin-brightening-face-wash',
@@ -121,7 +121,7 @@ export const products: Product[] = [
     shortName: 'Durani Rice Face Wash',
     category: 'face-wash',
     size: null,
-    price: null,
+    price: 400,
     images: [
       {
         base: '/images/products/durani-rice-face-wash',
@@ -140,7 +140,7 @@ export const products: Product[] = [
     shortName: 'Durani Beauty Cream',
     category: 'beauty-cream',
     size: null,
-    price: null,
+    price: 400,
     images: [
       {
         base: '/images/products/durani-beauty-cream',
@@ -166,7 +166,7 @@ export const products: Product[] = [
     shortName: 'Durani Vitamin C Serum',
     category: 'serums',
     size: null,
-    price: null,
+    price: 800,
     images: [
       {
         base: '/images/products/durani-vitamin-c-serum-poster',
@@ -192,7 +192,7 @@ export const products: Product[] = [
     shortName: 'Durani Gluta White Serum',
     category: 'serums',
     size: null,
-    price: null,
+    price: 800,
     images: [
       {
         base: '/images/products/durani-gluta-white-serum-poster',
@@ -220,7 +220,7 @@ export const products: Product[] = [
     shortName: 'Durani Zafrani Skin Polish',
     category: 'skin-polish',
     size: null,
-    price: null,
+    price: 500,
     images: [
       {
         base: '/images/products/durani-zafrani-skin-polish-poster',
