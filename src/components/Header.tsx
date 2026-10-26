@@ -1,9 +1,10 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { mainNav } from '../config/navigation';
+import { site, whatsappLink } from '../config/site';
 import { useCart } from '../context/CartContext';
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from '../lib/gsap';
-import { BagIcon, CloseIcon, MenuIcon, SearchIcon } from './Icons';
+import { BagIcon, CloseIcon, MenuIcon, SearchIcon, WhatsAppIcon } from './Icons';
 import { Modal } from './Modal';
 import { SearchDialog } from './SearchDialog';
 import { SocialLinks } from './SocialLinks';
@@ -37,6 +38,8 @@ export function AnnouncementBar() {
     </div>
   );
 }
+
+const whatsapp = whatsappLink('Hello Durani Cosmetics');
 
 export function Header() {
   const { count, openCart } = useCart();
@@ -158,6 +161,20 @@ export function Header() {
         </nav>
 
         <div data-header-item className="-mr-2 flex items-center justify-self-end">
+          {whatsapp && (
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${iconButton} xl:w-auto xl:gap-2 xl:px-3`}
+              aria-label={`WhatsApp ${site.contact.phone ?? ''} (opens in a new tab)`}
+            >
+              <WhatsAppIcon width={21} height={21} />
+              <span aria-hidden="true" className="hidden text-[0.8rem] font-medium tabular-nums xl:inline">
+                {site.contact.phone}
+              </span>
+            </a>
+          )}
           <button
             type="button"
             className={iconButton}
@@ -225,6 +242,21 @@ export function Header() {
             </ul>
           </nav>
           <div className="border-t border-line px-5 py-5">
+            {whatsapp && (
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-5 flex min-h-12 items-center gap-3 rounded-2xl bg-cream px-4 text-espresso"
+              >
+                <WhatsAppIcon width={22} height={22} />
+                <span>
+                  <span className="block text-xs tracking-[0.14em] text-cocoa uppercase">Order on WhatsApp</span>
+                  <span className="block font-medium tabular-nums">{site.contact.phone}</span>
+                </span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            )}
             <p className="eyebrow mb-3">Follow us</p>
             <SocialLinks />
           </div>

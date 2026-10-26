@@ -4,7 +4,7 @@
  * Every field here is taken from the supplied photos/packaging. Fields that
  * were not supplied are `null` and the UI shows a "to be confirmed" state:
  * - `price: null`  -> purchasing disabled, "Contact for price". Never use 0 as a placeholder.
- * - `size: null`   -> "Size to be confirmed"
+ * - `size: null`   -> size is not shown
  * - `usage` / `ingredients: null` -> section explains details are not yet supplied
  */
 

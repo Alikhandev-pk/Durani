@@ -110,8 +110,12 @@ export function ProductDiscovery() {
           <p className="eyebrow">{getCategory(product.category)?.name}</p>
           <h3 className="mt-2 text-2xl sm:text-3xl">{product.name}</h3>
           <dl className="mt-5 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
-            <dt className="text-cocoa">Size</dt>
-            <dd>{product.size ?? 'To be confirmed'}</dd>
+            {product.size && (
+              <>
+                <dt className="text-cocoa">Size</dt>
+                <dd>{product.size}</dd>
+              </>
+            )}
             <dt className="text-cocoa">Price</dt>
             <dd>
               <Price price={product.price} />

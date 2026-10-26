@@ -39,8 +39,17 @@ export function Footer() {
         <div className="col-span-2 max-w-xs sm:col-span-3 lg:col-span-1">
           <Wordmark className="h-20" />
           <p className="mt-5 text-sm text-cocoa">
-            Skincare from Durani Cosmetics, Pakistan — serum, face washes and beauty cream.
+            Skincare from Durani Cosmetics, Pakistan — serums, face washes, beauty cream and skin polish.
           </p>
+          {whatsapp && site.contact.phone && (
+            <p className="mt-4 text-sm">
+              <span className="block text-xs tracking-[0.14em] text-cocoa uppercase">Order on WhatsApp</span>
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="font-medium tabular-nums link-underline">
+                {site.contact.phone}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </p>
+          )}
           <div className="mt-5 flex gap-2">
             <SocialLinks />
             {whatsapp && (

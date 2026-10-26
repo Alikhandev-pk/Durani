@@ -10,7 +10,7 @@ export const site = {
   shortName: 'Durani',
   tagline: 'Pakistani skincare',
   description:
-    'Shop Durani Cosmetics skincare — Durani Serum, Durani Face Wash, Durani Rice Face Wash and Durani Beauty Cream.',
+    'Shop Durani Cosmetics skincare — Durani serums (Skin Whitening, Vitamin C and Gluta White), face washes, Beauty Cream and Zafrani Skin Polish.',
   currency: 'PKR',
   locale: 'en-PK',
 
@@ -25,18 +25,20 @@ export const site = {
 
   contact: {
     /** International format without "+" or spaces, e.g. "923001234567". Enables WhatsApp ordering when set. */
-    whatsapp: null as string | null,
-    phone: null as string | null,
+    whatsapp: '923329186395' as string | null,
+    /** The same number as written locally, shown to customers. */
+    phone: '0332 9186395' as string | null,
     email: null as string | null,
     address: null as string | null,
   },
 
   /**
-   * Order handling. While `endpoint` is null the checkout runs in demo mode:
-   * no order is sent and no success message is shown.
+   * Orders are placed by sending a prefilled WhatsApp message to
+   * `contact.whatsapp`; Durani confirms each order in the chat.
+   * `deliveryCharge` (PKR) is null until confirmed: totals then exclude delivery.
    */
   orders: {
-    endpoint: null as string | null,
+    deliveryCharge: null as number | null,
   },
 
   /** Customer promises. Leave false until the business confirms each one. */
@@ -48,7 +50,8 @@ export const site = {
   },
 } as const;
 
-export const isCheckoutLive = site.orders.endpoint !== null;
+/** Checkout works once there is a WhatsApp number to send orders to. */
+export const isCheckoutLive = site.contact.whatsapp !== null;
 
 export function whatsappLink(message: string): string | null {
   if (!site.contact.whatsapp) return null;

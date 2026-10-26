@@ -128,8 +128,12 @@ function ProductDetail({ slug }: { slug: string | undefined }) {
               <dd>
                 <Price price={product.price} className="text-xl" />
               </dd>
-              <dt className="text-sm text-cocoa">Size</dt>
-              <dd>{product.size ?? <span className="text-sm text-cocoa">To be confirmed</span>}</dd>
+              {product.size && (
+                <>
+                  <dt className="text-sm text-cocoa">Size</dt>
+                  <dd>{product.size}</dd>
+                </>
+              )}
             </dl>
 
             <div className="mt-6 flex flex-col gap-4">

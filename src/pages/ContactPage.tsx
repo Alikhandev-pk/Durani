@@ -7,7 +7,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 export function ContactPage() {
   usePageMeta({
     title: 'Contact',
-    description: 'Contact Durani Cosmetics on Facebook, Instagram or TikTok.',
+    description: `Contact Durani Cosmetics on WhatsApp${site.contact.phone ? ` (${site.contact.phone})` : ''}, Facebook, Instagram or TikTok.`,
   });
   const whatsapp = whatsappLink('Hello Durani Cosmetics');
   const { phone, email, address } = site.contact;
@@ -57,7 +57,7 @@ export function ContactPage() {
                 </span>
                 <span>
                   <span className="block font-serif text-xl">WhatsApp</span>
-                  <span className="block text-sm text-cocoa">Message us to order</span>
+                  <span className="block text-sm text-cocoa tabular-nums">{phone ?? 'Message us to order'}</span>
                   <span className="sr-only">(opens in a new tab)</span>
                 </span>
               </a>

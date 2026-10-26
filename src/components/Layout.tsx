@@ -4,6 +4,7 @@ import { gsap, MOTION_OK, ScrollTrigger, SplitText, useGSAP } from '../lib/gsap'
 import { CartDrawer } from './CartDrawer';
 import { Footer } from './Footer';
 import { AnnouncementBar, Header } from './Header';
+import { WhatsAppButton } from './WhatsAppButton';
 
 /**
  * Scroll to top on navigation, or to the #hash target when present. Runs as a
@@ -112,6 +113,7 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <WhatsAppButton />
       <CartDrawer />
     </>
   );

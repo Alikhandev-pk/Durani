@@ -35,8 +35,8 @@ Fill these in. The site already handles each one: when a value is `null`, the re
 - **Prices** for all seven products (`price` in `products.ts`); until then each shows "Contact for price". Purchasing turns on per product once a price is set, and price sorting appears.
 - **Sizes**: Durani Rice Face Wash, Durani Beauty Cream, Durani Vitamin C Serum, Durani Gluta White Serum and Durani Zafrani Skin Polish.
 - **Usage directions and ingredient lists** for each product.
-- **Order handling**: set `site.orders.endpoint` (receives a JSON POST) to switch off demo checkout. Until then, no order is sent and no success message is shown.
-- **WhatsApp number** (`site.contact.whatsapp`) turns on "Order on WhatsApp" buttons.
+- **Delivery charge**: set `site.orders.deliveryCharge` (PKR). Until then checkout and the WhatsApp message show delivery as "To be confirmed" and the total as excluding delivery.
+- **WhatsApp ordering** uses `site.contact.whatsapp` (923329186395). Checkout opens WhatsApp with a prefilled order message; the customer presses Send and Durani confirms in the chat.
 - **Phone, email, address** (optional) are shown on the Contact page when set.
 - **Delivery charges, delivery areas, payment methods (COD), returns**: write the policies in `policies.ts` and set `status: 'confirmed'`.
 - **Domain** (`site.url`). Once it is known, make the `og:image` and schema `logo` URLs in `index.html` absolute.

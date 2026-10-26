@@ -46,7 +46,7 @@ export function ProductCard({ product, headingLevel = 3 }: { product: Product; h
             {product.name}
           </Link>
         </Heading>
-        <p className="mt-1 text-sm text-cocoa">{product.size ?? 'Size to be confirmed'}</p>
+        {product.size && <p className="mt-1 text-sm text-cocoa">{product.size}</p>}
         <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3">
           <Price price={product.price} />
           {purchasable && (

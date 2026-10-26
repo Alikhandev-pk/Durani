@@ -63,11 +63,13 @@ function buildFaq(): AccordionItem[] {
       title: 'What sizes are available?',
       content: (
         <ul className="list-disc space-y-1 pl-5">
-          {products.map((p) => (
-            <li key={p.slug}>
-              {p.shortName}: {p.size ?? 'size to be confirmed'}
-            </li>
-          ))}
+          {products
+            .filter((p) => p.size)
+            .map((p) => (
+              <li key={p.slug}>
+                {p.shortName}: {p.size}
+              </li>
+            ))}
         </ul>
       ),
     },
@@ -75,7 +77,11 @@ function buildFaq(): AccordionItem[] {
       id: 'order',
       title: 'How can I place an order?',
       content: isCheckoutLive ? (
-        <p>Add products to your cart and complete the checkout form.</p>
+        <p>
+          Add products to your cart, enter your delivery details at checkout and press “Place Order via WhatsApp”. Send
+          the prepared message on WhatsApp{site.contact.phone ? ` to ${site.contact.phone}` : ''} and Durani
+          Cosmetics will confirm your order in the chat.
+        </p>
       ) : whatsapp ? (
         <p>
           Message us on{' '}
@@ -91,7 +97,17 @@ function buildFaq(): AccordionItem[] {
     {
       id: 'delivery',
       title: 'What delivery and payment options are available?',
-      content: <p>Please contact us on {facebookLink} for current delivery and payment options.</p>,
+      content: whatsapp ? (
+        <p>
+          Please message us on{' '}
+          <a href={whatsapp} className="link-underline text-espresso" target="_blank" rel="noopener noreferrer">
+            WhatsApp
+          </a>{' '}
+          or {facebookLink} for current delivery and payment options.
+        </p>
+      ) : (
+        <p>Please contact us on {facebookLink} for current delivery and payment options.</p>
+      ),
     },
     {
       id: 'ingredients',
